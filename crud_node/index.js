@@ -135,7 +135,8 @@ server.post('/auth/authenticate', (req, res, next) => {
         res.send(generetedData);
 
       } else {
-        const err = new Error('Senha Invalida!')
+        const err = new Error('Senha Invalida!');
+        console.log(JSON.stringify(err));
         return res.send(err);
       }
 

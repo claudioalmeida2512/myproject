@@ -31,8 +31,9 @@ class FormLogin extends Component {
       const { user, token } = response.data;
 
     } catch (response) {
+      console.log(JSON.stringify(response.data));
       this.setState({ 
-        errorMessage: response.data.error,
+        errorMessage: response.data.err,
         style: "alert alert-danger" ,
        });
 
@@ -61,7 +62,7 @@ class FormLogin extends Component {
               <br></br>
             </div>
             <div className={this.state.style}>
-              {this.state.errorMessage && <p>{this.state.errorMessage}</p>}
+              { this.state.errorMessage && <p>Usuario Não Encontrado !!</p> }
             </div>
           </div>
 
