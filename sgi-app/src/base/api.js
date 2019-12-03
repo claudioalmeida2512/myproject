@@ -1,7 +1,12 @@
 import { create } from 'apisauce' ;
 
 const api = create({ 
-    baseUrl: 'http://localhost:8080',
+    baseURL: 'http://localhost:8080',
+
+});
+
+api.addResponseTransform( response => {
+    if (!response.ok) throw response ;
 
 });
 
