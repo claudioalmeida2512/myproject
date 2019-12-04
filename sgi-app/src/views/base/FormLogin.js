@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import api from '../../base/api';
-import { getToken, login } from '../../base/auth';
-
+import { getToken, login, logout } from '../../base/auth';
+import { Redirect } from 'react-router-dom';
 
 class FormLogin extends Component {
 
@@ -12,15 +12,16 @@ class FormLogin extends Component {
       senha: '',
       errorMessage: null,
       style: "",
+      isLogado: false,
     };
   }
 
   handleChange = (event) => {
     const { name, value } = event.target;
     this.setState({
-       [name]: value ,
-       style: "" ,
-       errorMessage: null,
+      [name]: value,
+      style: "",
+      errorMessage: null,
     })
   }
 
@@ -32,12 +33,18 @@ class FormLogin extends Component {
       });
       const { user, token } = response.data;
       login(response);
+      this.setState({
+        isLogado: true,
+      }
+
+      );
 
     } catch (response) {
-       this.setState({ 
+      logout();
+      this.setState({
         errorMessage: response.data.message,
-        style: "alert alert-danger" ,
-       });
+        style: "alert alert-danger",
+      });
 
     }
 
@@ -46,31 +53,41 @@ class FormLogin extends Component {
   };
 
   render() {
-    return (
-      <div className="conteudoPrincipal">
-        <div className="container col-4">
-          <h1>Login</h1>
+    if (this.state.isLogado) {
+      return (
+       
+          <Redirect to={{ pathname: '/login' }} />
+       
+      );
+    } else {
+      return (
+        <div className="conteudoPrincipal">
+          <div className="container col-4">
+            <h1>Login</h1>
 
-          <div className="form-group">
-            <label htmlFor="email">E-mail:</label>
-            <input className="form-control" type="text" id="email" name="email" value={this.email} onChange={this.handleChange} />
-          </div>
-          <div className="form-group">
-            <label htmlFor="senha">Senha:</label>
-            <input className="form-control" type="password" id="senha" name="senha" value={this.senha} onChange={this.handleChange} className="form-control" />
-            <br></br>
-            <div className="col-8">
-              <button className="btn btn-block btn-primary" onClick={this.signIn} >Logar</button>
+            <div className="form-group">
+              <label htmlFor="email">E-mail:</label>
+              <input className="form-control" type="text" id="email" name="email" value={this.email} onChange={this.handleChange} />
+            </div>
+            <div className="form-group">
+              <label htmlFor="senha">Senha:</label>
+              <input className="form-control" type="password" id="senha" name="senha" value={this.senha} onChange={this.handleChange} className="form-control" />
               <br></br>
+              <div className="col-8">
+                <button className="btn btn-block btn-primary" onClick={this.signIn} >Logar</button>
+                <br></br>
+              </div>
+              <div className={this.state.style}>
+                {this.state.errorMessage && <p>{this.state.errorMessage}</p>}
+              </div>
             </div>
-            <div className={this.state.style}>
-              { this.state.errorMessage && <p>{this.state.errorMessage}</p> }
-            </div>
-          </div>
 
+          </div>
         </div>
-      </div>
-    );
+      );
+
+    }
+
   }
 }
 
