@@ -1,5 +1,6 @@
 const knex = require('./database');
 const restify = require('restify');
+const errs = require('restify-errors');
 const corsMiddleware = require('restify-cors-middleware');
 const jwt = require('jsonwebtoken');
 const config = require('./config');
@@ -24,6 +25,14 @@ server.use(cors.actual)
 
 server.listen(8080, function () {
   console.log('%s listening at %s', server.name, server.url);
+});
+
+server.on('InternalServer', function(req, res, err, callback) {
+
+  // Algum código para capturar métricas ou logs
+
+  return callback();
+
 });
 
 server.get('/list/:table', (req, res, next) => {
@@ -100,11 +109,12 @@ server.get('/pesq/:table/:field/:value', (req, res, next) => {
     .first()
     .then((dados) => {
       if (!dados)
-        return res.send(new Error('Usuario não encontrado!'));
+      return next(new errs.InternalServerError('Usuario não encontrado!'));
       console.log(dados);
       res.send(dados);
     }, next)
 });
+
 
 server.post('/auth/authenticate', (req, res, next) => {
   const email = req.body.email;
@@ -115,9 +125,8 @@ server.post('/auth/authenticate', (req, res, next) => {
     .first()
     .then((dados) => {
       if (!dados) {
-        const err = new Error('Usuario não encontrado!')
-        console.log(err.message);
-        return res.send(err);
+        console.log('Usuario não encontrado!');
+        return next(new errs.InternalServerError('Usuario não encontrado!'));
       }
       let tokenData = {
         id: dados.id,
@@ -135,9 +144,7 @@ server.post('/auth/authenticate', (req, res, next) => {
         res.send(generetedData);
 
       } else {
-        const err = new Error('Senha Invalida!');
-        console.log(JSON.stringify(err));
-        return res.send(err);
+        return next(new errs.InternalServerError('Senha Invalida!'));
       }
 
     }, next)

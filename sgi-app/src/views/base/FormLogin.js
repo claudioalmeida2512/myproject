@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import api from '../../base/api';
+import { getToken, login } from '../../base/auth';
 
 
 class FormLogin extends Component {
@@ -19,6 +20,7 @@ class FormLogin extends Component {
     this.setState({
        [name]: value ,
        style: "" ,
+       errorMessage: null,
     })
   }
 
@@ -29,11 +31,11 @@ class FormLogin extends Component {
         senha: this.state.senha
       });
       const { user, token } = response.data;
+      login(response);
 
     } catch (response) {
-      console.log(JSON.stringify(response.data));
-      this.setState({ 
-        errorMessage: response.data.err,
+       this.setState({ 
+        errorMessage: response.data.message,
         style: "alert alert-danger" ,
        });
 
@@ -62,7 +64,7 @@ class FormLogin extends Component {
               <br></br>
             </div>
             <div className={this.state.style}>
-              { this.state.errorMessage && <p>Usuario Não Encontrado !!</p> }
+              { this.state.errorMessage && <p>{this.state.errorMessage}</p> }
             </div>
           </div>
 
