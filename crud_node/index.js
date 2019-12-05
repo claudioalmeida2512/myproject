@@ -46,7 +46,7 @@ server.get('/list/:table', (req, res, next) => {
     )
 });
 
-
+//lista com left outer join 
 server.get('/list/:table/:left/:idA/:idB', (req, res, next) => {
   knex.select('*')
     .from(req.params.table)

@@ -2,6 +2,7 @@ import React from 'react';
 import { BrowserRouter, Route, Switch, Redirect } from 'react-router-dom';
 import { isAuthenticated } from './auth';
 import FormLogin from '../views/base/FormLogin' ;
+import ListDocs from '../views/cadastros/ListDocs' ;
 
 const PrivateRoute = ({ component: Component, ...rest }) => (
   <Route
@@ -19,7 +20,7 @@ const Routes = () => (
   <BrowserRouter>
     <Switch>
       <Route exact path='/' component={() => <FormLogin/> } />
-      <PrivateRoute exact path='/login' component={() => <h1>Hello World</h1> } />
+      <PrivateRoute exact path='/docs' component={() => <ListDocs/> } />
     </Switch>
   </BrowserRouter>
 );

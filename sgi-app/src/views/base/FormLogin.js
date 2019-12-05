@@ -56,7 +56,7 @@ class FormLogin extends Component {
     if (this.state.isLogado) {
       return (
        
-          <Redirect to={{ pathname: '/login' }} />
+          <Redirect to={{ pathname: '/docs' }} />
        
       );
     } else {
