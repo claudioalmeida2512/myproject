@@ -71,7 +71,7 @@ export default class ListaTipos extends Component {
             <div className="conteudoPrincipal">
                 <div className='container col-12'>
                     {this.state.isNew &&
-                         <FormTipo />
+                         <FormTipo  getTipos={this.getTipos.bind(this)} />
                      }<br></br>
                     <h1>Lista de Tipos</h1>
                     <button className="btn btn-block btn-primary" onClick={this.newTipo} >{this.state.btCad}</button>
