@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import NumberFormat from 'react-number-format';
 import { height } from '@material-ui/system';
+import api from '../../base/api';
 
 export default class FormTipo extends Component {
     constructor(props) {
@@ -24,32 +25,59 @@ export default class FormTipo extends Component {
         })
     }
 
+    setTipo = async () => {
+        try {
+            const response = await api.post('/generic/tpdoc', {
+                cod_tipo: this.state.cod_tipo,
+                desc_tipo: this.state.desc_tipo,
+                obs_tipo: this.state.obs_tipo,
+
+            });
+            this.setState({
+                cod_tipo: "",
+                desc_tipo: "",
+                obs_tipo: "",
+                style: "alert alert-success",
+                errorMessage: "Cadastrado de Tipo Efutuado com Sucesso !!",
+            });
+
+        }
+        catch (response) {
+            this.setState({
+                style: "alert alert-danger",
+                errorMessage: "Não foi possivel cadastrar o Tipo !!",
+            });
+        }
+    };
+
     render() {
         return (
             <div className={this.state.colsList}>
                 <h3>Novo Documento</h3>
+                <div class={this.state.style} role="alert">
+                        {this.state.erorMessage}
+                    </div>
                 <div className="row">
                     <div className="form-group col-md-1"  >
-                        <label htmlFor="cod_tipo">Codido</label>
-                        <NumberFormat format="###" mask="_" className="form-control" type="text" id="cod_tipo" name="cod_tipo" value={this.state.cod_tipo} onChange={this.handleChange} />
+                        <label htmlFor="cod_tipo">Tipo</label>
+                        <input className="form-control" type="text"  id="cod_tipo" name="cod_tipo" value={this.state.cod_tipo} onChange={this.handleChange} />
                     </div>
-                    <div className="form-group col-md-1"  >
-                        <label htmlFor="desc_tipo">Tipo</label>
+                    <div className="form-group col-md-5"  >
+                        <label htmlFor="desc_tipo">Descrição</label>
                         <input className="form-control" type="text" id="desc_tipo" name="desc_tipo" value={this.state.desc_tipo} onChange={this.handleChange} />
                     </div>
                     <div className="form-group col-md-5"  >
-                        <label htmlFor="obs_tipo">Descrição</label>
-                        <input className="form-control" type="text" id="obs_tipo" name="obs_tipo" value={this.doc_titulo} onChange={this.handleChange} />
-                    </div>
-                    <div className="form-group col-md-5"  >
                         <label htmlFor="obs_tipo">Observação</label>
-                        <textarea style={{height: "120px"}} className="form-control" id="obs_tipo" name="obs_tipo" value={this.doc_titulo} onChange={this.handleChange} ></textarea>
+                        <textarea style={{ height: "120px" }} className="form-control" id="obs_tipo" name="obs_tipo" value={this.doc_titulo} onChange={this.handleChange} ></textarea>
                     </div>
                 </div>
-                <div className="form-group col-md-4"  >
+                <div className="form-group col-md-2"  >
                     <label></label>
-                    <button className="btn btn-block btn-primary"  >Incluir</button>
+                    <button className="btn btn-block btn-primary" onClick={this.setTipo} >Incluir</button>
+                  
                 </div>
+
+
             </div>
         );
 
