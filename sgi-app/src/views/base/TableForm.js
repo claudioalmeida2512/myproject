@@ -231,9 +231,9 @@ function Table({ columns, data }) {
     const firstPageRows = rows.slice(0, 10)
     // Render the UI for your table
     return (
-        <>
+        < >
 
-            <table {...getTableProps()} className="table table-sm table-hover table-bordered">
+            <table {...getTableProps()} className="table table-sm table-hover table-bordered container responsive">
                 <thead>
                     {headerGroups.map(headerGroup => (
                         <tr {...headerGroup.getHeaderGroupProps()}>

@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import api from '../../base/api';
 import TableForm from '../base/TableForm';
-
+import FormDoc from './FormDoc';
 
 
 
@@ -11,7 +11,9 @@ export default class FormList extends Component {
         super(props);
         this.state = {
             colsList: 'container col-12',
+            colDoc: '',
             listDocs: [],
+            isNew: false,
         };
     }
 
@@ -35,6 +37,15 @@ export default class FormList extends Component {
 
     }
 
+    newDoc = () => {
+        this.setState({
+            isNew: true,
+            colsList: 'container col-12',
+            colDoc: 'container col-12'
+        });
+
+    }
+
     render() {
         const columns = [
             {
@@ -48,7 +59,7 @@ export default class FormList extends Component {
             {
                 Header: "Tipo",
                 accessor: "doc_tipo",
-                Filter: this.SelectColumnFilter ,
+                Filter: this.SelectColumnFilter,
                 filter: 'includes',
 
             },
@@ -60,7 +71,7 @@ export default class FormList extends Component {
             {
                 Header: "Revisao",
                 accessor: "doc_rev",
-                Filter: this.SelectColumnFilter ,
+                Filter: this.SelectColumnFilter,
                 filter: 'includes',
             },
             {
@@ -82,15 +93,24 @@ export default class FormList extends Component {
         ];
         const data = this.state.listDocs;
         return (
-            <div className="conteudoPrincipal">
-                <div className={this.state.colsList}>
-                    <h1>Lista de Documentos</h1>
+            <>
+                <div className="conteudoPrincipal">
+                    <div className={this.state.colsList}>
+                        {this.state.isNew &&
+                            <div className={this.state.colDoc}>
+                                <FormDoc />
+                            </div>
+                        }<br></br>
+                        <h1>Lista de Documentos</h1>
+                        <button className="btn btn-block btn-primary" onClick={this.newDoc} >Cadastrar Doc</button>
+                        <TableForm columns={columns} data={data} />
 
-                    <TableForm columns={columns} data={data} />
-
+                    </div>
 
                 </div>
-            </div>
+
+            </>
+
         );
     }
 
@@ -129,7 +149,7 @@ export default class FormList extends Component {
         )
     }
 
-    
+
 
 }
 
