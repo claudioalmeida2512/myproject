@@ -40,6 +40,7 @@ export default class FormTipo extends Component {
                 style: "alert alert-success",
                 errorMessage: "Cadastrado de Tipo Efutuado com Sucesso !!",
             });
+            this.props.getTipos() ;
 
         }
         catch (response) {
@@ -55,7 +56,7 @@ export default class FormTipo extends Component {
             <div className={this.state.colsList}>
                 <h3>Novo Documento</h3>
                 <div class={this.state.style} role="alert">
-                        {this.state.erorMessage}
+                        {this.state.errorMessage}
                     </div>
                 <div className="row">
                     <div className="form-group col-md-1"  >
@@ -68,12 +69,12 @@ export default class FormTipo extends Component {
                     </div>
                     <div className="form-group col-md-5"  >
                         <label htmlFor="obs_tipo">Observação</label>
-                        <textarea style={{ height: "120px" }} className="form-control" id="obs_tipo" name="obs_tipo" value={this.doc_titulo} onChange={this.handleChange} ></textarea>
+                        <textarea style={{ height: "120px" }} className="form-control" id="obs_tipo" name="obs_tipo" value={this.state.obs_tipo} onChange={this.handleChange} ></textarea>
                     </div>
-                </div>
+                </div> 
                 <div className="form-group col-md-2"  >
                     <label></label>
-                    <button className="btn btn-block btn-primary" onClick={this.setTipo} >Incluir</button>
+                    <button className="btn btn-block btn-primary" onClick={this.setTipo} disabled={!this.state.cod_tipo || !this.state.desc_tipo   } >Incluir</button>
                   
                 </div>
 
