@@ -12,6 +12,7 @@ export default class FormList extends Component {
         this.state = {
             colsList: 'container col-12',
             colDoc: '',
+            btCad: 'Cadastrar Doc',
             listDocs: [],
             isNew: false,
         };
@@ -38,12 +39,23 @@ export default class FormList extends Component {
     }
 
     newDoc = () => {
-        this.setState({
-            isNew: true,
-            colsList: 'container col-12',
-            colDoc: 'container col-12'
-        });
 
+        if (!this.state.isNew) {
+            this.setState({
+                isNew: true,
+                colsList: 'container col-12',
+                colDoc: 'container col-12',
+                btCad: 'Expandir Lista',
+            });
+        } else {
+            this.setState({
+                isNew: false,
+                colsList: 'container col-12',
+                colDoc: 'container col-12',
+                btCad: 'Cadastrar Doc',
+            });
+
+        }
     }
 
     render() {
@@ -102,7 +114,7 @@ export default class FormList extends Component {
                             </div>
                         }<br></br>
                         <h1>Lista de Documentos</h1>
-                        <button className="btn btn-block btn-primary" onClick={this.newDoc} >Cadastrar Doc</button>
+                        <button className="btn btn-block btn-primary" onClick={this.newDoc} >{this.state.btCad}</button>
                         <TableForm columns={columns} data={data} />
 
                     </div>

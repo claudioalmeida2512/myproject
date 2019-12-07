@@ -10,6 +10,7 @@ import Menu from '@material-ui/core/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
 import { Redirect } from 'react-router-dom';
 import ListDocs from '../cadastros/ListDocs';
+import ListaTipos from '../cadastros/ListaTipos';
 import FormLogin from '../base/FormLogin';
 import { logout } from '../../base/auth';
 import TextField from '@material-ui/core/TextField';
@@ -42,7 +43,7 @@ const caminho = [
   <></>,
   <FormLogin />,
   <ListDocs />,
-  <ListDocs />,
+  <ListaTipos />,
   <ListDocs />,
   <ListDocs />,
   <FormLogin />,
