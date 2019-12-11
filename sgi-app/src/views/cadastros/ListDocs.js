@@ -94,10 +94,7 @@ export default class FormList extends Component {
                 Header: "Fim",
                 accessor: "doc_final"
             },
-            {
-                Header: "Usuario",
-                accessor: "doc_user"
-            },
+           
             {
                 Header: "Aprovadores",
                 accessor: "doc_aprov"
@@ -110,7 +107,7 @@ export default class FormList extends Component {
                     <div className={this.state.colsList}>
                         {this.state.isNew &&
                             <div className={this.state.colDoc}>
-                                <FormDoc />
+                                <FormDoc getDocs={this.getDocs.bind(this)} />
                             </div>
                         }<br></br>
                         <h1>Lista de Documentos</h1>

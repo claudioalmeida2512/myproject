@@ -11,10 +11,12 @@ import MenuItem from '@material-ui/core/MenuItem';
 import { Redirect } from 'react-router-dom';
 import ListDocs from '../cadastros/ListDocs';
 import ListaTipos from '../cadastros/ListaTipos';
+import ListaFuncoes from '../cadastros/ListaFuncoes';
 import FormLogin from '../base/FormLogin';
 import { logout } from '../../base/auth';
 import TextField from '@material-ui/core/TextField';
 import { isAuthenticated,getUser } from '../../base/auth';
+import HomeIcon from '@material-ui/icons/Home';
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -44,7 +46,7 @@ const caminho = [
   <FormLogin />,
   <ListDocs />,
   <ListaTipos />,
-  <ListDocs />,
+  <ListaFuncoes />,
   <ListDocs />,
   <FormLogin />,
 ];
@@ -71,6 +73,10 @@ export default function TopBar() {
     setAnchorEl(null);
   };
 
+  const home = () => {
+    setSelectedIndex(0);;
+  };
+
   const sair = () => {
     if ( !isAuthenticated()  ) {
       setSelectedIndex(6);
@@ -89,6 +95,10 @@ export default function TopBar() {
         <Toolbar>
           <IconButton edge="start" className={classes.menuButton} color="inherit" aria-label="menu">
             <MenuIcon onClick={handleClick} />
+          </IconButton>
+
+          <IconButton edge="start" className={classes.menuButton} color="inherit" aria-label="menu">
+            <HomeIcon onClick={home} />
           </IconButton>
           <Typography variant="h6" className={classes.title}>
             SGI

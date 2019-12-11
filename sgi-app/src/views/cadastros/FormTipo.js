@@ -38,7 +38,7 @@ export default class FormTipo extends Component {
                 desc_tipo: "",
                 obs_tipo: "",
                 style: "alert alert-success",
-                errorMessage: "Cadastrado de Tipo Efutuado com Sucesso !!",
+                errorMessage: "Cadastro de Tipo Efutuado com Sucesso !!",
             });
             this.props.getTipos() ;
 

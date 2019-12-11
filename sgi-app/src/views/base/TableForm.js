@@ -135,7 +135,7 @@ function NumberRangeColumnFilter({
                 }}
                 placeholder={`Min (${min})`}
                 style={{
-                    width: '70px',
+                    width: '50px',
                     marginRight: '0.5rem',
                 }}
             />
@@ -149,7 +149,7 @@ function NumberRangeColumnFilter({
                 }}
                 placeholder={`Max (${max})`}
                 style={{
-                    width: '70px',
+                    width: '50px',
                     marginLeft: '0.5rem',
                 }}
             />
@@ -233,7 +233,7 @@ function Table({ columns, data }) {
     return (
         < >
 
-            <table {...getTableProps()} className="table table-sm table-hover table-bordered container responsive">
+            <table {...getTableProps()} className="table table-sm table-hover table-bordered responsive ">
                 <thead>
                     {headerGroups.map(headerGroup => (
                         <tr {...headerGroup.getHeaderGroupProps()}>
