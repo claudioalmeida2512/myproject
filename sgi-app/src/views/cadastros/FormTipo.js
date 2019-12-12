@@ -38,7 +38,7 @@ export default class FormTipo extends Component {
                 desc_tipo: "",
                 obs_tipo: "",
                 style: "alert alert-success",
-                errorMessage: "Cadastro de Tipo Efutuado com Sucesso !!",
+                errorMessage: "Cadastro de Tipo efetuado com Sucesso !!",
             });
             this.props.getTipos() ;
 
@@ -53,7 +53,7 @@ export default class FormTipo extends Component {
 
     render() {
         return (
-            <div className={this.state.colsList}>
+            <div className='container col-12'>
                 <h3>Novo Documento</h3>
                 <div class={this.state.style} role="alert">
                         {this.state.errorMessage}

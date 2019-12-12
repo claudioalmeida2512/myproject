@@ -57,7 +57,7 @@ export default class ListaTipos extends Component {
                 accessor: "cod_tipo",
             },
             {
-                Header: "Desc",
+                Header: "Descrição",
                 accessor: "desc_tipo",
             },
             {

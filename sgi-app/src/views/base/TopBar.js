@@ -12,6 +12,7 @@ import { Redirect } from 'react-router-dom';
 import ListDocs from '../cadastros/ListDocs';
 import ListaTipos from '../cadastros/ListaTipos';
 import ListaFuncoes from '../cadastros/ListaFuncoes';
+import ListaCargos from '../cadastros/ListaCargos';
 import FormLogin from '../base/FormLogin';
 import { logout } from '../../base/auth';
 import TextField from '@material-ui/core/TextField';
@@ -35,20 +36,23 @@ const useStyles = makeStyles((theme: Theme) =>
 const options = [
   'Atualizações',
   'Usuarios',
-  'Documentos',
   'Tipos de Documentos',
-  'Funções',
+  'Documentos',
   'Departamentos',
+  'Cargos',
+  'Funções',
+  
 ];
 
 const caminho = [
   <></>,
   <FormLogin />,
-  <ListDocs />,
   <ListaTipos />,
-  <ListaFuncoes />,
   <ListDocs />,
-  <FormLogin />,
+  <ListDocs />,
+  <ListaCargos />,
+  <ListaFuncoes />,
+   <FormLogin />,
 ];
 
 var op = true ;

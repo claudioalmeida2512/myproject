@@ -1,34 +1,39 @@
 import React, { Component } from 'react';
 import api from '../../base/api';
 import TableForm from '../base/TableForm';
-import FormFuncao from './FormFuncao';
+import FormCargo from './FormCargo';
 
-export default class  ListaFuncoes extends Component  {
+export default class ListaCargos extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            btCad: 'Cadastrar Funcao',
-            listaFuncoes: [],
+            btCad: 'Cadastrar Cargo',
+            listaCargos: [],
             isNew: false,
         };
     }
 
-    getFuncoes = async () => {
+    getCargos = async () => {
         try {
-            const response = await api.get('/list/funcao');
+            const response = await api.get('/list/cargo');
             this.setState({
-                listaFuncoes: response.data,
+                listaCargos: response.data,
             });
 
         }
         catch (response) {
             this.setState({
-                listaFuncoes: [],
+                listaCargos: [],
             });
         }
     };
 
-    newFuncao = () => {
+    componentDidMount() {
+        this.getCargos();
+
+    }
+
+    newCargo = () => {
 
         if (!this.state.isNew) {
             this.setState({
@@ -38,60 +43,45 @@ export default class  ListaFuncoes extends Component  {
         } else {
             this.setState({
                 isNew: false,
-                btCad: 'Cadastrar Funcao',
+                btCad: 'Cadastrar Cargo',
             });
 
         }
     }
 
-
-    componentDidMount() {
-        this.getFuncoes();
-
-    }
-
-    render(){
+    render() {
         const columns = [
             {
-                Header: "Codigo",
-                accessor: "idfuncao",
-            },
-            {
-                Header: "Desc. Funcao",
-                accessor: "func_desc",
-            },
-            {
                 Header: "Cargo",
-                accessor: "func_cargo",
+                accessor: "idcargo",
             },
             {
-                Header: "Funcao Superior",
-                accessor: "func_sup",
+                Header: "Descrição",
+                accessor: "cargo_desc",
             },
         ];
-        const data = this.state.listaFuncoes;
-       return(
-        <>
-        <div className="conteudoPrincipal">
-            <div className='container col-12'>
-                {this.state.isNew &&
-                     <FormFuncao getFuncoes={this. getFuncoes.bind(this)} />
-                 }<br></br>
-                <h1>Lista de Funcoes</h1>
-                <button className="btn btn-block btn-primary" onClick={this.newFuncao} >{this.state.btCad}</button>
-                <TableForm columns={columns} data={data} />
+        const data = this.state.listaCargos;
+        return (
+            <>
+                <div className="conteudoPrincipal">
+                    <div className='container col-12'>
+                        {this.state.isNew &&
+                            <FormCargo getCargos={this.getCargos.bind(this)} />
+                        }<br></br>
+                        <h1>Lista de Cargos</h1>
+                        <button className="btn btn-block btn-primary" onClick={this.newCargo} >{this.state.btCad}</button>
+                        <TableForm columns={columns} data={data} />
 
-            </div>
+                    </div>
 
-        </div>
+                </div>
 
-    </>
+            </>
 
-       );
-
+        );
     }
 
-// This is a custom filter UI for selecting
+     // This is a custom filter UI for selecting
     // a unique option from a list
     SelectColumnFilter = ({
         column: { filterValue, setFilter, preFilteredRows, id },
@@ -123,7 +113,5 @@ export default class  ListaFuncoes extends Component  {
             </select>
         )
     }
-
-
 
 }
