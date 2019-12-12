@@ -84,7 +84,7 @@ export default function TopBar() {
 
   const sair = () => {
     if ( !isAuthenticated()  ) {
-      setSelectedIndex(6);
+      setSelectedIndex(7);
     }else {
       logout();
       setSelectedIndex(0);

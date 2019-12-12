@@ -63,7 +63,7 @@ export default class FormCargo extends Component {
                 errorMessage: "Cadastro de Departamento efetuado com Sucesso !!",
             });
             this.props.getDeparts();
-
+            this.getUsers();
         }
         catch (response) {
             this.setState({

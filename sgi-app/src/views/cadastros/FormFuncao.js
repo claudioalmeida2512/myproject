@@ -81,7 +81,6 @@ export default class FormFuncao extends Component {
                 idfuncao: this.state.idfuncao,
                 func_desc: this.state.func_desc,
                 func_cargo: this.state.func_cargo,
-                func_desc_cargo: this.state.func_desc_cargo,
                 func_sup: this.state.func_sup,
             });
             this.setState(this.inicialState);
@@ -90,6 +89,8 @@ export default class FormFuncao extends Component {
                 errorMessage: "Cadastro de Funcao efutuado com Sucesso !!",
             });
             this.props.getFuncoes();
+            this.getFuncoes();
+            this.getCargos();
 
         }
         catch (response) {

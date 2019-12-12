@@ -95,7 +95,7 @@ export default class FormDoc extends Component {
                 errorMessage: "Cadastrado de Documento Efutuado com Sucesso !!",
             });
             this.props.getDocs();
-
+            this.getTipos();
         }
         catch (response) {
             this.setState({
