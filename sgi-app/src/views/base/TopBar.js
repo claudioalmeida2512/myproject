@@ -14,6 +14,7 @@ import ListaTipos from '../cadastros/ListaTipos';
 import ListaFuncoes from '../cadastros/ListaFuncoes';
 import ListaCargos from '../cadastros/ListaCargos';
 import ListaDeparts from '../cadastros/ListaDeparts';
+import ListaUsers from '../cadastros/ListaUsers';
 import FormLogin from '../base/FormLogin';
 import { logout } from '../../base/auth';
 import TextField from '@material-ui/core/TextField';
@@ -47,7 +48,7 @@ const options = [
 
 const caminho = [
   <></>,
-  <FormLogin />,
+  <ListaUsers />,
   <ListaTipos />,
   <ListDocs />,
   <ListaDeparts />,
