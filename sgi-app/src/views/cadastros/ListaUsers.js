@@ -83,7 +83,7 @@ export default class ListaUsers extends Component {
                         {this.state.isNew &&
                             <FormUser getUsers={this.getUsers.bind(this)} />
                         }<br></br>
-                        <h1>Lista de Users</h1>
+                        <h1>Lista de Usuários</h1>
                         <button className="btn btn-block btn-primary" onClick={this.newUser} >{this.state.btCad}</button>
                         <TableForm columns={columns} data={data} />
 

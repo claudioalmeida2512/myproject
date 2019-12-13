@@ -17,6 +17,12 @@ export default class FormUser extends Component {
             errorMessage: null,
         };
         this.state = this.inicialState;
+        this.usernameInput = React.createRef();
+        this.emailInput = React.createRef();
+        this.senhaInput = React.createRef();
+        this.depInput = React.createRef();
+        this.funcInput = React.createRef();
+      
     }
 
     getFuncoes = async () => {
@@ -90,7 +96,7 @@ export default class FormUser extends Component {
             this.props.getUsers();
             this.getFuncoes();
             this.getDeparts();
-
+            this.usernameInput.current.focus();
         }
         catch (response) {
             this.setState({
@@ -104,14 +110,14 @@ export default class FormUser extends Component {
         this.setState({
             user_dep: newValue.value,
         });
-
+        this.funcInput.current.focus();
     };
 
     handleSelectFuncaoChange = (newValue: any, actionMeta: any) => {
         this.setState({
             user_funcao: newValue.value,
         });
-
+        this.senhaInput.current.focus();  
     };
 
     handleInputChange = (inputValue: any, actionMeta: any) => {
@@ -124,7 +130,21 @@ export default class FormUser extends Component {
     componentDidMount() {
         this.getFuncoes();
         this.getDeparts();
+        this.usernameInput.current.focus();
     }
+
+    _handleKeyDown = (e) => {
+        const { name, value } = e.target;
+        if (e.key === 'Enter' ) {
+          if (name.match(/username/)){
+           this.emailInput.current.focus();
+          }
+          if (name.match(/email/)){
+            this.depInput.current.focus();
+          }
+                   
+        }
+      }
 
     render() {
         return (
@@ -136,11 +156,29 @@ export default class FormUser extends Component {
                 <div className="row">
                     <div className="form-group col-md-5"  >
                         <label htmlFor="username">Usuario</label>
-                        <input className="form-control" type="text" id="username" name="username" value={this.state.username} onChange={this.handleChange} />
+                        <input 
+                        className="form-control" 
+                        type="text" id="username" 
+                        name="username" 
+                        value={this.state.username} 
+                        placeholder="Enter userName"
+                        onChange={this.handleChange} 
+                        ref={this.usernameInput}
+                        onKeyDown={this._handleKeyDown}
+                        />
                     </div>
                     <div className="form-group col-md-5"  >
                         <label htmlFor="email">email</label>
-                        <input className="form-control" type="text" id="email" name="email" value={this.state.email} onChange={this.handleChange} />
+                        <input 
+                        className="form-control" 
+                        type="text" 
+                        id="email" 
+                        name="email" 
+                        value={this.state.email} 
+                        onChange={this.handleChange}
+                        ref= {this.emailInput}
+                        onKeyDown={this._handleKeyDown}
+                         />
                     </div>
                 </div>
                 <div className="row">
@@ -150,7 +188,9 @@ export default class FormUser extends Component {
                             isClearable
                             onChange={this.handleSelectDptChange}
                             onInputChange={this.handleInputChange}
-                            options={this.state.listaDeparts} />
+                            options={this.state.listaDeparts} 
+                            ref={this.depInput} 
+                         />
                     </div>
                     <div className="form-group col-md-5"  >
                         <label htmlFor="sel_func">Função</label>
@@ -158,17 +198,24 @@ export default class FormUser extends Component {
                             isClearable
                             onChange={this.handleSelectFuncaoChange}
                             onInputChange={this.handleInputChange}
-                            options={this.state.listaFuncoes} />
+                            options={this.state.listaFuncoes}
+                            ref={this.funcInput}  />
                     </div>
                 </div>
                 <div className="row">
                     <div className="form-group col-md-5"  >
                         <label htmlFor="pass">Senha</label>
-                        <input className="form-control" type="password" id="pass" name="pass" value={this.state.pass} onChange={this.handleChange} />
+                        <input className="form-control" type="password" id="pass" 
+                        name="pass" value={this.state.pass} onChange={this.handleChange}
+                        ref={this.senhaInput}  
+                      />
                     </div>
                     <div className="form-group col-md-2"  >
                         <label></label>
-                        <button className="btn btn-block btn-primary" onClick={this.setUser} disabled={!this.state.username} >Incluir</button>
+                        <button id="bt1" name="bt1" className="btn btn-block btn-primary" 
+                        onClick={this.setUser} 
+                        disabled={!this.state.username} 
+                      >Incluir</button>
                     </div>
                 </div>
             </div>
