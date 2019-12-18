@@ -2,7 +2,8 @@ import React, { Component } from 'react';
 import NumberFormat from 'react-number-format';
 import { height } from '@material-ui/system';
 import api from '../../base/api';
-import Select from 'react-select/creatable'
+import Select from 'react-select/creatable';
+
 
 export default class FormFuncao extends Component {
     constructor(props) {
@@ -19,6 +20,9 @@ export default class FormFuncao extends Component {
             errorMessage: null,
         };
         this.state = this.inicialState;
+        this.cargoInput = React.createRef();
+        this.btInput = React.createRef();
+      
     }
 
     getFuncoes = async () => {
@@ -102,18 +106,19 @@ export default class FormFuncao extends Component {
     };
 
 
-    handleSelect1Change = (newValue: any, actionMeta: any) => {
+    handleSelectFuncaoChange = (newValue: any, actionMeta: any) => {
         this.setState({
             func_sup: newValue.value,
         });
+        this.cargoInput.current.focus();
 
     };
 
-    handleSelect2Change = (newValue: any, actionMeta: any) => {
+    handleSelectCargoChange = (newValue: any, actionMeta: any) => {
         this.setState({
             func_cargo: newValue.value,
         });
-
+        this.btInput.current.focus();
     };
 
     handleInputChange = (inputValue: any, actionMeta: any) => {
@@ -126,31 +131,48 @@ export default class FormFuncao extends Component {
     componentDidMount() {
         this.getFuncoes();
         this.getCargos();
+       
+    }
+
+    _handleKeyDown = (e) => {
+        if (e.key === 'Enter') {
+            const node = e.target.form ;   //TRAZ UM ARRAY DO form 
+            const index = Array.prototype.indexOf.call(node, e.target);
+            node.elements[index + 1].focus();
+            e.preventDefault();
+        }
     }
 
     render() {
         return (
-            <div className='container col-12'>
+            <form>
                 <h3>Nova  Funcao</h3>
-                <div class={this.state.style} role="alert">
+                <div className={this.state.style} role="alert">
                     {this.state.errorMessage}
                 </div>
                 <div className="row">
                     <div className="form-group col-md-1"  >
                         <label htmlFor="idfuncao">Codigo</label>
-                        <NumberFormat format="###" mask="_" className="form-control" type="text" id="idfuncao" name="idfuncao" value={this.state.idfuncao} onChange={this.handleChange} />
+                        <NumberFormat format="###" mask="_" className="form-control" 
+                        type="text" id="idfuncao" name="idfuncao" value={this.state.idfuncao} 
+                        onChange={this.handleChange}
+                        onKeyDown={this._handleKeyDown} 
+                       />
                     </div>
                     <div className="form-group col-md-5"  >
                         <label htmlFor="func_desc">Descrição</label>
-                        <input className="form-control" type="text" id="func_desc" name="func_desc" value={this.state.func_desc} onChange={this.handleChange} />
+                        <input className="form-control" type="text" id="func_desc" 
+                        name="func_desc" value={this.state.func_desc} onChange={this.handleChange}
+                        onKeyDown={this._handleKeyDown} />
                     </div>
                     <div className="form-group col-md-4"  >
                         <label htmlFor="sel_func_sup">Função Superior</label>
                         <Select
                             isClearable
-                            onChange={this.handleSelect1Change}
+                            onChange={this.handleSelectFuncaoChange}
                             onInputChange={this.handleInputChange}
-                            options={this.state.listaFuncoes} />
+                            options={this.state.listaFuncoes}
+                             />
                     </div>
                 </div>
                 <div className="row">
@@ -158,16 +180,20 @@ export default class FormFuncao extends Component {
                         <label htmlFor="sel_func_cargo">Cargo</label>
                         <Select
                             isClearable
-                            onChange={this.handleSelect2Change}
+                            onChange={this.handleSelectCargoChange}
                             onInputChange={this.handleInputChange}
-                            options={this.state.listaCargos} />
+                            options={this.state.listaCargos}
+                            ref = {this.cargoInput} />
                     </div>
                     <div className="form-group col-md-2"  >
                         <label></label>
-                        <button className="btn btn-block btn-primary" onClick={this.setFuncao} disabled={!this.state.idfuncao || !this.state.func_desc} >Incluir</button>
+                        <button className="btn btn-block btn-primary" 
+                        onClick={this.setFuncao} 
+                        disabled={!this.state.idfuncao || !this.state.func_desc}
+                        ref={this.btInput} >Incluir</button>
                     </div>
                 </div>
-            </div>
+            </form>
 
         );
     }

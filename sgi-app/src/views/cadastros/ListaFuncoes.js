@@ -3,7 +3,7 @@ import api from '../../base/api';
 import TableForm from '../base/TableForm';
 import FormFuncao from './FormFuncao';
 
-export default class  ListaFuncoes extends Component  {
+export default class ListaFuncoes extends Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -50,7 +50,17 @@ export default class  ListaFuncoes extends Component  {
 
     }
 
-    render(){
+    //editar linha
+    handleEdit(){
+
+    }
+
+    //deletar item
+    handleDelete(){
+
+    }
+
+    render() {
         const columns = [
             {
                 Header: "Codigo",
@@ -68,30 +78,31 @@ export default class  ListaFuncoes extends Component  {
                 Header: "Funcao Superior",
                 accessor: "func_sup",
             },
+           
         ];
         const data = this.state.listaFuncoes;
-       return(
-        <>
-        <div className="conteudoPrincipal">
-            <div className='container col-12'>
-                {this.state.isNew &&
-                     <FormFuncao getFuncoes={this. getFuncoes.bind(this)} />
-                 }<br></br>
-                <h1>Lista de Funcoes</h1>
-                <button className="btn btn-block btn-primary" onClick={this.newFuncao} >{this.state.btCad}</button>
-                <TableForm columns={columns} data={data} />
+        return (
+            <>
+                <div className="conteudoPrincipal">
+                    <div className='container col-12'>
+                        {this.state.isNew &&
+                            <FormFuncao getFuncoes={this.getFuncoes.bind(this)} />
+                        }<br></br>
+                        <h1>Lista de Funcoes</h1>
+                        <button className="btn btn-block btn-primary" onClick={this.newFuncao} >{this.state.btCad}</button>
+                        <TableForm columns={columns} data={data} />
 
-            </div>
+                    </div>
 
-        </div>
+                </div>
 
-    </>
+            </>
 
-       );
+        );
 
     }
 
-// This is a custom filter UI for selecting
+    // This is a custom filter UI for selecting
     // a unique option from a list
     SelectColumnFilter = ({
         column: { filterValue, setFilter, preFilteredRows, id },

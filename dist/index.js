@@ -34,6 +34,7 @@ server.post('/upload', (request, response) => {
   for (var key in request.files) {
     if (request.files.hasOwnProperty(key)) {
       fs.renameSync(request.files[key].path, `${__dirname}/../uploads/${request.files[key].name}`);
+      fs.unlink(request.files[key].path);
     }
   }
   response.send(202, { message: 'File uploaded' });

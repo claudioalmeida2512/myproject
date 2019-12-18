@@ -15,7 +15,7 @@ export default class FormTipo extends Component {
             style: "",
             errorMessage: null,
         };
-        this.myRef = React.createRef();
+       
 
     }
 
@@ -57,10 +57,8 @@ export default class FormTipo extends Component {
 
     _handleKeyDown = (e) => {
         if (e.key === 'Enter') {
-            const node = e.target.form ;
-            //const node = e.target.form ;
+            const node = e.target.form ;   //TRAZ UM ARRAY DO form 
             const index = Array.prototype.indexOf.call(node, e.target);
-            console.log("node: "+index);
             node.elements[index + 1].focus();
             e.preventDefault();
         }

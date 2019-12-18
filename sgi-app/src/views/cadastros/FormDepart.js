@@ -3,6 +3,7 @@ import NumberFormat from 'react-number-format';
 import api from '../../base/api';
 import Select from 'react-select/creatable'
 
+
 export default class FormCargo extends Component {
     constructor(props) {
         super(props);
@@ -92,9 +93,18 @@ export default class FormCargo extends Component {
         this.getUsers();
     }
 
+    _handleKeyDown = (e) => {
+        if (e.key === 'Enter') {
+            const node = e.target.form ;   //TRAZ UM ARRAY DO form 
+            const index = Array.prototype.indexOf.call(node, e.target);
+            node.elements[index + 1].focus();
+            e.preventDefault();
+        }
+    }
+    
     render() {
         return (
-            <div className='container col-12'>
+            <form>
                 <h3>Novo Departamento</h3>
                 <div class={this.state.style} role="alert">
                     {this.state.errorMessage}
@@ -102,11 +112,17 @@ export default class FormCargo extends Component {
                 <div className="row">
                     <div className="form-group col-md-1"  >
                         <label htmlFor="iddepart">Departamento</label>
-                        <NumberFormat format="###" mask="_" className="form-control" type="text" id="iddepart" name="iddepart" value={this.state.iddepart} onChange={this.handleChange} />
+                        <NumberFormat format="###" mask="_" className="form-control" 
+                        type="text" id="iddepart" name="iddepart" value={this.state.iddepart} 
+                        onChange={this.handleChange}
+                        onKeyDown={this._handleKeyDown} />
                     </div>
                     <div className="form-group col-md-5"  >
                         <label htmlFor="dept_desc">Descrição</label>
-                        <input className="form-control" type="text" id="dept_desc" name="dept_desc" value={this.state.dept_desc} onChange={this.handleChange} />
+                        <input className="form-control" type="text" id="dept_desc" 
+                        name="dept_desc" value={this.state.dept_desc} 
+                        onChange={this.handleChange}
+                        onKeyDown={this._handleKeyDown} />
                     </div>
                     <div className="form-group col-md-4"  >
                         <label htmlFor="sel_user">Responsavel</label>
@@ -114,14 +130,15 @@ export default class FormCargo extends Component {
                             isClearable
                             onChange={this.handleSelectChange}
                             onInputChange={this.handleInputChange}
-                            options={this.state.listaUsers} />
+                            options={this.state.listaUsers} 
+                            onKeyDown={this._handleKeyDown}/>
                     </div>
                 </div>
                 <div className="form-group col-md-2"  >
                     <label></label>
                     <button className="btn btn-block btn-primary" onClick={this.setDepart} disabled={!this.state.iddepart || !this.state.dept_desc} >Incluir</button>
                 </div>
-            </div>
+            </form>
 
         );
     }
