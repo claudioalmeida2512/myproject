@@ -50,6 +50,25 @@ export default class ListaTipos extends Component {
         }
     }
 
+    deleteRow = async (idTipo) => {
+        const aLista = this.state.listaTipos ;
+        const index = aLista.findIndex(tipo => {
+            return tipo.cod_tipo === idTipo
+        });
+        try {
+            const response = await api.delete('/delete/tpdoc/cod_tipo/' + idTipo)
+            console.log(response.data);
+            aLista.splice(index, 1);
+            this.setState({
+                listaTipos: aLista,
+            });
+
+        } catch (response) {
+            console.log("Não foi possivel deletar o departamento!!!");
+        }
+
+    }
+
     render() {
         const columns = [
             {
@@ -63,6 +82,19 @@ export default class ListaTipos extends Component {
             {
                 Header: "Observação",
                 accessor: "obs_tipo",
+            },
+            {
+                Header: "Actions",
+                Cell: props => {
+                    return (
+                        <button onClick={() => {
+                            this.deleteRow(props.row.original.cod_tipo)
+                        }
+                        } >Delete</button>
+                    )
+                },
+                width: 50
+
             },
         ];
         const data = this.state.listaTipos;

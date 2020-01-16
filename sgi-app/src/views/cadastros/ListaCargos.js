@@ -49,6 +49,26 @@ export default class ListaCargos extends Component {
         }
     }
 
+    deleteRow = async (idCargo) => {
+        const aLista = this.state.listaCargos ;
+        const index = aLista.findIndex(cargo => {
+            return cargo.idcargo === idCargo
+        });
+        try {
+            const response = await api.delete('/delete/cargo/idcargo/' + idCargo)
+            console.log(response.data);
+            aLista.splice(index, 1);
+            this.setState({
+                listaCargos: aLista,
+            });
+
+        } catch (response) {
+            console.log("Não foi possivel deletar o departamento!!!");
+        }
+         
+    }
+    
+
     render() {
         const columns = [
             {
@@ -58,6 +78,19 @@ export default class ListaCargos extends Component {
             {
                 Header: "Descrição",
                 accessor: "cargo_desc",
+            },
+            {
+                Header: "Actions",
+                Cell: props => {
+                    return (
+                        <button onClick={() => {
+                            this.deleteRow(props.row.original.idcargo)
+                        }
+                        } >Delete</button>
+                    )
+                },
+                width: 50
+
             },
         ];
         const data = this.state.listaCargos;

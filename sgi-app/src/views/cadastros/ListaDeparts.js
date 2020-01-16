@@ -15,7 +15,7 @@ export default class ListaDeparts extends Component {
 
     getDeparts = async () => {
         try {
-            const response = await api.get('/list/depart');
+            const response = await api.get('/list/depart/users/id/dept_resp');
             this.setState({
                 listaDeparts: response.data,
             });
@@ -49,6 +49,25 @@ export default class ListaDeparts extends Component {
         }
     }
 
+    deleteRow = async (idDep) => {
+        const aLista = this.state.listaDeparts;
+        const index = aLista.findIndex(dep => {
+            return dep.iddepart === idDep
+        });
+        try {
+            const response = await api.delete('/delete/depart/iddepart/' + idDep)
+            console.log(response.data);
+            aLista.splice(index, 1);
+            this.setState({
+                listaDeparts: aLista,
+            });
+
+        } catch (response) {
+            console.log("Não foi possivel deletar o departamento!!!");
+        }
+
+    }
+
     render() {
         const columns = [
             {
@@ -61,7 +80,20 @@ export default class ListaDeparts extends Component {
             },
             {
                 Header: "Responsável",
-                accessor: "dept_resp",
+                accessor: "username",
+            },
+            {
+                Header: "Actions",
+                Cell: props => {
+                    return (
+                        <button onClick={() => {
+                            this.deleteRow(props.row.original.iddepart)
+                        }
+                        } >Delete</button>
+                    )
+                },
+                width: 50
+
             },
         ];
         const data = this.state.listaDeparts;
@@ -85,7 +117,7 @@ export default class ListaDeparts extends Component {
         );
     }
 
-     // This is a custom filter UI for selecting
+    // This is a custom filter UI for selecting
     // a unique option from a list
     SelectColumnFilter = ({
         column: { filterValue, setFilter, preFilteredRows, id },

@@ -38,6 +38,28 @@ export default class FormList extends Component {
 
     }
 
+    deleteRow = async (idDoc) => {
+        const aLista = this.state.listDocs ;
+        const index = aLista.findIndex(doc => {
+            return doc.iddocumento === idDoc
+        });
+        console.log("Delete Iniciado");
+        try{
+            const response = await api.delete('/delete/documento/iddocumento/'+idDoc)
+            console.log(response);
+            aLista.splice(index,1) ;
+            this.setState({
+                    listDocs: aLista,
+                }) ;
+
+        }  catch (response) {
+            console.log("Não foi possivel deletar o documento!!!") ;
+        }
+      
+       
+        
+    }
+
     newDoc = () => {
 
         if (!this.state.isNew) {
@@ -94,10 +116,26 @@ export default class FormList extends Component {
                 Header: "Fim",
                 accessor: "doc_final"
             },
-           
             {
-                Header: "Aprovadores",
-                accessor: "doc_aprov"
+                Header: "Actions",
+                Cell: props => {
+                    return (
+                        <button onClick={() => {
+                            this.deleteRow(props.row.original.iddocumento)
+                        }
+                        } >Delete</button>
+                    )
+                },
+                width: 50
+
+            },
+            {
+                Header: "te",
+                Cell: props => {
+                    return (
+                        <button>Edit</button>
+                    )
+                }
             },
         ];
         const data = this.state.listDocs;

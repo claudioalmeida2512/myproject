@@ -15,7 +15,7 @@ export default class ListaFuncoes extends Component {
 
     getFuncoes = async () => {
         try {
-            const response = await api.get('/list/funcao');
+            const response = await api.get('/list/funcao/cargo/funcao/func_cargo/idcargo/idfuncao/func_sup');
             this.setState({
                 listaFuncoes: response.data,
             });
@@ -60,6 +60,25 @@ export default class ListaFuncoes extends Component {
 
     }
 
+    deleteRow = async (idFunc) => {
+        const aLista = this.state.listaFuncoes ;
+        const index = aLista.findIndex(func => {
+            return func.idfuncao === idFunc
+        });
+        try {
+            const response = await api.delete('/delete/funcao/idfuncao/' + idFunc)
+            console.log(response.data);
+            aLista.splice(index, 1);
+            this.setState({
+                listaFuncoes: aLista,
+            });
+
+        } catch (response) {
+            console.log("Não foi possivel deletar o departamento!!!");
+        }
+
+    }
+
     render() {
         const columns = [
             {
@@ -72,11 +91,24 @@ export default class ListaFuncoes extends Component {
             },
             {
                 Header: "Cargo",
-                accessor: "func_cargo",
+                accessor: "cargo_desc",
             },
             {
                 Header: "Funcao Superior",
-                accessor: "func_sup",
+                accessor: "func_desc",
+            },
+            {
+                Header: "Actions",
+                Cell: props => {
+                    return (
+                        <button onClick={() => {
+                            this.deleteRow(props.row.original.idfuncao)
+                        }
+                        } >Delete</button>
+                    )
+                },
+                width: 50
+
             },
            
         ];

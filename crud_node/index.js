@@ -24,11 +24,7 @@ server.use(restify.plugins.bodyParser({
   mapParams: false,
 }));
 
-server.get('/\/(.*)?.*/', restify.plugins.serveStatic({
-  directory: `${__dirname}/../dist`,
-  default: './index.html',
-  maxAge: 0
-}));
+
 
 server.post('/upload', (request, response) => {
   for (var key in request.files) {
@@ -66,11 +62,22 @@ server.get('/list/:table', (req, res, next) => {
     )
 });
 
+server.get('/', (req, res, next) => {
+    
+    //  console.log(" teste !!!") ;
+      console.log(res) ;
+      res.send(" teste !!!");
+
+    
+  
+});
+
 //lista com left outer join 
-server.get('/list/:table/:left/:idA/:idB', (req, res, next) => {
+server.get('/list/:table/:leftA/:leftB/:idA/:idB/:idC/:idD', (req, res, next) => {
   knex.select('*')
     .from(req.params.table)
-    .leftOuterJoin(req.params.left, req.params.idA, req.params.idB)
+    .leftOuterJoin(req.params.leftA, req.params.idA, req.params.idB)
+    .leftOuterJoin(req.params.leftB, req.params.idC, req.params.idD)
     .then((dados) => {
      res.send(dados);
     
@@ -183,11 +190,11 @@ server.put('/update/:id', (req, res, next) => {
     }, next)
 });
 
-server.del('/delete/:id', (req, res, next) => {
-  const { id } = req.params;
-
-  knex('users')
-    .where('id', id)
+server.del('/delete/:table/:field/:id', (req, res, next) => {
+  const { table, field, id } = req.params;
+  console.log("Delete Table : %s Id: %s",table,id);
+  knex(table)
+    .where(field, id)
     .delete()
     .then((dados) => {
       if (!dados)

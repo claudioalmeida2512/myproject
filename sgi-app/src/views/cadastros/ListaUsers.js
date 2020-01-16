@@ -15,7 +15,7 @@ export default class ListaUsers extends Component {
 
     getUsers = async () => {
         try {
-            const response = await api.get('/list/users');
+            const response = await api.get('/list/users/depart/funcao/user_dep/iddepart/user_funcao/idfuncao');
             this.setState({
                 listaUsers: response.data,
             });
@@ -48,6 +48,25 @@ export default class ListaUsers extends Component {
 
     }
 
+    deleteRow = async (idUser) => {
+        const aLista = this.state.listaUsers ;
+        const index = aLista.findIndex(user => {
+            return user.id === idUser
+        });
+        try {
+            const response = await api.delete('/delete/users/id/' + idUser)
+            console.log(response.data);
+            aLista.splice(index, 1);
+            this.setState({
+                listaUsers: aLista,
+            });
+
+        } catch (response) {
+            console.log("Não foi possivel deletar o departamento!!!");
+        }
+
+    }
+
     render() {
         const columns = [
             {
@@ -68,11 +87,24 @@ export default class ListaUsers extends Component {
             },
             {
                 Header: "Departamento",
-                accessor: "user_dep",
+                accessor: "dept_desc",
             },
             {
                 Header: "Função",
-                accessor: "user_funcao",
+                accessor: "func_desc",
+            },
+            {
+                Header: "Actions",
+                Cell: props => {
+                    return (
+                        <button onClick={() => {
+                            this.deleteRow(props.row.original.id)
+                        }
+                        } >Delete</button>
+                    )
+                },
+                width: 50
+
             },
         ];
         const data = this.state.listaUsers;
