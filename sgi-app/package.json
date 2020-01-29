@@ -5,7 +5,7 @@
   "dependencies": {
     "@material-ui/core": "^4.7.1",
     "@material-ui/icons": "^4.5.1",
-    "@material-ui/styles": "^4.7.1",
+    "@material-ui/styles": "^4.9.0",
     "apisauce": "^1.1.1",
     "match-sorter": "^4.0.2",
     "react": "^16.12.0",

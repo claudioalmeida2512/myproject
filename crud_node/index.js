@@ -73,11 +73,26 @@ server.get('/', (req, res, next) => {
 });
 
 //lista com left outer join 
-server.get('/list/:table/:leftA/:leftB/:idA/:idB/:idC/:idD', (req, res, next) => {
+server.post('/list/:tableA/:tableB/:tableC/:idA/:idB/:idC/:idD', (req, res, next) => {
+  var oSelect =  req.body;  
+ // console.log(oSelect) ;
+  knex.select(oSelect)
+    .from({ a: req.params.tableA } )
+    .leftOuterJoin( { b: req.params.tableB } , 'b.'+req.params.idB, 'a.'+req.params.idA)
+    .leftOuterJoin( { c: req.params.tableC } , 'c.'+req.params.idD, 'a.'+req.params.idC)
+    .then((dados) => {
+     res.send(dados);
+    
+    }, next
+    
+    )
+});
+
+//lista com left outer join 
+server.get('/list/:table/:leftA/:idA/:idB', (req, res, next) => {
   knex.select('*')
     .from(req.params.table)
     .leftOuterJoin(req.params.leftA, req.params.idA, req.params.idB)
-    .leftOuterJoin(req.params.leftB, req.params.idC, req.params.idD)
     .then((dados) => {
      res.send(dados);
     

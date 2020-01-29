@@ -125,6 +125,7 @@ export default class FormDoc extends Component {
                 doc_status: 0,
                 doc_user: idLogado,
                 doc_aprov: 0,
+                doc_local: "uploads"
 
             });
             this.setState(this.inicialState);

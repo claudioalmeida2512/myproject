@@ -15,7 +15,14 @@ export default class ListaUsers extends Component {
 
     getUsers = async () => {
         try {
-            const response = await api.get('/list/users/depart/funcao/user_dep/iddepart/user_funcao/idfuncao');
+            const response = await api.post('/list/users/depart/funcao/user_dep/iddepart/user_funcao/idfuncao',{
+                "status": "a.status",
+                "id": "a.id" ,
+                "username": "a.username",
+                "email": "a.email",
+                "dept_desc": "b.dept_desc",
+                "func_desc": "c.func_desc"
+            });
             this.setState({
                 listaUsers: response.data,
             });

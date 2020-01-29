@@ -15,7 +15,12 @@ export default class ListaFuncoes extends Component {
 
     getFuncoes = async () => {
         try {
-            const response = await api.get('/list/funcao/cargo/funcao/func_cargo/idcargo/idfuncao/func_sup');
+            const response = await api.post('/list/funcao/cargo/funcao/func_cargo/idcargo/func_sup/idfuncao',{
+            "idfuncao":  "a.idfuncao",
+            "desc": "a.func_desc" ,
+            "cargo": "b.cargo_desc" ,
+            "superior": "c.func_desc" } 
+            );
             this.setState({
                 listaFuncoes: response.data,
             });
@@ -87,15 +92,15 @@ export default class ListaFuncoes extends Component {
             },
             {
                 Header: "Desc. Funcao",
-                accessor: "func_desc",
+                accessor: "desc",
             },
             {
                 Header: "Cargo",
-                accessor: "cargo_desc",
+                accessor: "cargo",
             },
             {
                 Header: "Funcao Superior",
-                accessor: "func_desc",
+                accessor: "superior",
             },
             {
                 Header: "Actions",
