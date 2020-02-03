@@ -8,7 +8,6 @@ import IconButton from '@material-ui/core/IconButton';
 import MenuIcon from '@material-ui/icons/Menu';
 import Menu from '@material-ui/core/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
-import { Redirect } from 'react-router-dom';
 import ListDocs from '../cadastros/ListDocs';
 import ListaTipos from '../cadastros/ListaTipos';
 import ListaFuncoes from '../cadastros/ListaFuncoes';
@@ -17,7 +16,6 @@ import ListaDeparts from '../cadastros/ListaDeparts';
 import ListaUsers from '../cadastros/ListaUsers';
 import FormLogin from '../base/FormLogin';
 import { logout } from '../../base/auth';
-import TextField from '@material-ui/core/TextField';
 import { isAuthenticated,getUser } from '../../base/auth';
 import HomeIcon from '@material-ui/icons/Home';
 
@@ -57,7 +55,6 @@ const caminho = [
    <FormLogin />,
 ];
 
-var op = true ;
 
 export default function TopBar() {
   const classes = useStyles();
