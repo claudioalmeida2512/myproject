@@ -74,6 +74,15 @@ export default class ListaUsers extends Component {
 
     }
 
+    editRow = async () => {
+        this.setState({
+            isNew: true,
+            btCad: 'Expandir Lista',
+        });
+
+    }
+
+
     render() {
         const columns = [
             {
@@ -108,6 +117,19 @@ export default class ListaUsers extends Component {
                             this.deleteRow(props.row.original.id)
                         }
                         } >Delete</button>
+                    )
+                },
+                width: 50
+
+            },
+            {
+                Header: "Edit",
+                Cell: props => {
+                    return (
+                        <button onClick={() => {
+                            this.editRow()
+                        }
+                        } >Edit</button>
                     )
                 },
                 width: 50
