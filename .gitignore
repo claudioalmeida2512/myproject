@@ -1,1 +1,10 @@
 node_modules
+.vscode
+crud_node
+dist
+python
+SaMapa
+sgi-app
+SgiMobile
+uploads
+
