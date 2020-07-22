@@ -7,4 +7,6 @@ SaMapa
 sgi-app
 SgiMobile
 uploads
+.gitignore
+package-lock.json
 
