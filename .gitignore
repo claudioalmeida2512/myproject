@@ -3,6 +3,7 @@ node_modules
 crud_node
 dist
 python
+API_DJANGO
 SaMapa
 sgi-app
 SgiMobile
@@ -10,3 +11,8 @@ uploads
 .gitignore
 package-lock.json
 
+node_modules
+node_modules
+node_modules
+node_modules
+node_modules
